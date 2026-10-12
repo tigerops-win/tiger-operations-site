@@ -3,113 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tiger Operations</title>
-<meta name="description" content="Tiger Operations builds data services for the AI-agent economy and for the firms that serve it.">
+<title>Tiger Operations — Data Supply for the Agent Economy</title>
+<meta name="description" content="Tiger Operations builds the supply layer for the AI-agent economy: per-call data APIs for AI agents and file-only NetSuite CSV preflight and repair.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e1116;
-    --surface: #161b22;
-    --border: #2a313c;
-    --text: #e8ecf1;
-    --muted: #9aa7b5;
-    --accent: #e8a33d;
+    --bg: #08090c;
+    --bg-2: #0d0f13;
+    --surface: #101318;
+    --line: rgba(244, 242, 237, 0.09);
+    --line-strong: rgba(244, 242, 237, 0.16);
+    --text: #f4f2ed;
+    --muted: #9ba3ad;
+    --faint: #626a74;
+    --accent: #f0a02c;
+    --accent-dim: rgba(240, 160, 44, 0.12);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 24px; }
-  header { padding: 72px 0 40px; border-bottom: 1px solid var(--border); }
-  .mark {
-    display: inline-block;
-    font-size: 13px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid var(--border);
-    padding: 6px 12px;
-    border-radius: 4px;
-    margin-bottom: 28px;
+  ::selection { background: var(--accent); color: #0a0a0a; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .marquee-track { animation: none !important; }
+    .hero-stripes { animation: none !important; }
   }
-  h1 { font-size: 42px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; }
-  .lede { margin-top: 20px; font-size: 19px; color: var(--muted); max-width: 620px; }
-  main { padding: 48px 0 8px; }
-  h2 {
-    font-size: 13px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 24px;
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(8, 9, 12, 0.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
   }
-  .offerings { display: grid; gap: 20px; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--text); }
+  .claw { display: inline-flex; gap: 3.5px; transform: skewX(-18deg); }
+  .claw i { display: block; width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+  .claw i:nth-child(2) { height: 15px; opacity: 0.75; }
+  .claw i:nth-child(3) { height: 10px; opacity: 0.5; }
+  .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.14em; }
+  .nav-links { display: flex; gap: 34px; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a.nav-cta { color: var(--accent); border: 1px solid rgba(240, 160, 44, 0.4); padding: 8px 16px; border-radius: 6px; }
+  .nav-links a.nav-cta:hover { background: var(--accent-dim); color: var(--accent); }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding: 120px 0 96px; overflow: hidden; }
+  .hero-stripes {
+    position: absolute; inset: -40% -10% auto auto; width: 720px; height: 720px;
+    background: repeating-linear-gradient(-45deg, rgba(240, 160, 44, 0.05) 0 2px, transparent 2px 26px);
+    -webkit-mask-image: radial-gradient(circle at 70% 30%, black 0%, transparent 65%);
+            mask-image: radial-gradient(circle at 70% 30%, black 0%, transparent 65%);
+    animation: drift 26s linear infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-30px, 22px, 0); } }
+  .hero-glow {
+    position: absolute; top: -260px; right: -120px; width: 640px; height: 640px;
+    background: radial-gradient(circle, rgba(240, 160, 44, 0.07) 0%, transparent 62%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 30px;
+  }
+  .eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--accent); }
+  h1 {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: clamp(46px, 8.4vw, 92px);
+    font-weight: 700; line-height: 0.98; letter-spacing: -0.022em;
+    max-width: 900px;
+  }
+  h1 .accent { color: var(--accent); }
+  h1 .slash { color: var(--accent); font-weight: 500; }
+  .hero-sub { margin-top: 30px; font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 640px; line-height: 1.65; }
+  .hero-sub strong { color: var(--text); font-weight: 600; }
+  .hero-actions { margin-top: 42px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 15px;
+    padding: 14px 26px; border-radius: 7px; transition: transform 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #0b0a08; }
+  .btn-primary:hover { transform: translateY(-2px); background: #f5ab3a; }
+  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
+
+  /* ---------- marquee ---------- */
+  .marquee { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; overflow: hidden; background: var(--bg-2); }
+  .marquee-track { display: flex; gap: 0; width: max-content; animation: scroll 38s linear infinite; }
+  .marquee-track span {
+    font-family: "Space Grotesk", sans-serif; font-size: 13px; font-weight: 600;
+    letter-spacing: 0.26em; text-transform: uppercase; color: var(--faint);
+    padding: 0 28px; white-space: nowrap;
+  }
+  .marquee-track span b { color: var(--accent); font-weight: 600; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- sections ---------- */
+  section { padding: 104px 0; }
+  .section-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 54px; }
+  .section-num { font-family: "Space Grotesk", sans-serif; color: var(--accent); font-size: 15px; font-weight: 700; letter-spacing: 0.1em; }
+  h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(30px, 4.4vw, 44px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.08; }
+  .section-lede { color: var(--muted); font-size: 17px; max-width: 600px; margin-top: 14px; }
+
+  /* ---------- products ---------- */
+  .products { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px;
+    position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 40px 36px 36px; overflow: hidden;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s;
   }
-  .card h3 { font-size: 21px; font-weight: 650; margin-bottom: 10px; }
-  .card p { color: var(--muted); font-size: 16px; }
-  .card p + p { margin-top: 10px; }
-  .tag {
-    display: inline-block;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 12px;
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent 65%);
+    opacity: 0; transition: opacity 0.35s;
   }
-  section.contact { padding: 48px 0 64px; }
-  .contact p { color: var(--muted); font-size: 17px; }
-  .contact a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--accent); }
-  .contact a:hover { color: var(--accent); }
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 24px 0 40px;
-    color: var(--muted);
-    font-size: 14px;
+  .card:hover { transform: translateY(-5px); border-color: rgba(240, 160, 44, 0.45); }
+  .card:hover::before { opacity: 1; }
+  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+  .card-idx { font-family: "Space Grotesk", sans-serif; font-size: 14px; font-weight: 700; color: var(--faint); letter-spacing: 0.12em; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(240, 160, 44, 0.5); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(240, 160, 44, 0.45); } 70% { box-shadow: 0 0 0 8px rgba(240, 160, 44, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 160, 44, 0); } }
+  .card h3 { font-family: "Space Grotesk", sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .card .for { font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin-bottom: 18px; }
+  .card p { color: var(--muted); font-size: 16px; line-height: 1.7; }
+  .card ul { list-style: none; margin-top: 22px; border-top: 1px solid var(--line); }
+  .card ul li { padding: 11px 0 11px 24px; position: relative; color: var(--muted); font-size: 14.5px; border-bottom: 1px solid var(--line); }
+  .card ul li:last-child { border-bottom: none; }
+  .card ul li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 9px; height: 2px; background: var(--accent); transform: skewX(-24deg); }
+  .card ul li b { color: var(--text); font-weight: 600; }
+
+  /* ---------- principles ---------- */
+  .principles { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .prin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .prin { padding: 38px 32px; background: var(--surface); }
+  .prin + .prin { border-left: 1px solid var(--line); }
+  .prin .glyph { font-family: "Space Grotesk", sans-serif; font-size: 26px; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+  .prin h4 { font-family: "Space Grotesk", sans-serif; font-size: 19px; font-weight: 600; margin-bottom: 10px; }
+  .prin p { color: var(--muted); font-size: 15px; line-height: 1.65; }
+
+  /* ---------- contact ---------- */
+  .contact { text-align: left; }
+  .contact h2 { font-size: clamp(36px, 6vw, 62px); max-width: 720px; }
+  .contact p { color: var(--muted); font-size: 18px; margin-top: 20px; max-width: 560px; }
+  .contact .mail {
+    display: inline-block; margin-top: 36px;
+    font-family: "Space Grotesk", sans-serif; font-size: clamp(20px, 3.4vw, 30px); font-weight: 600;
+    color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 4px;
+    transition: color 0.2s;
   }
-  @media (max-width: 560px) {
-    header { padding: 48px 0 32px; }
-    h1 { font-size: 32px; }
-    .lede { font-size: 17px; }
+  .contact .mail:hover { color: var(--accent); }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .foot-inner p { color: var(--faint); font-size: 14px; }
+  .foot-brand { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; letter-spacing: 0.14em; font-weight: 600; }
+
+  @media (max-width: 860px) {
+    .products, .prin-grid { grid-template-columns: 1fr; }
+    .prin + .prin { border-left: none; border-top: 1px solid var(--line); }
+    section { padding: 72px 0; }
+    .hero { padding: 84px 0 72px; }
+    .nav-links a:not(.nav-cta) { display: none; }
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <span class="mark">Tiger Operations</span>
-      <h1>Data services for the AI-agent economy.</h1>
-      <p class="lede">Tiger Operations is an operations company building data services for the AI-agent economy and for the firms that serve it. We build small, precise tools that do one job well — and charge only for what they deliver.</p>
-    </header>
 
-    <main>
-      <h2>What we run</h2>
-      <div class="offerings">
-        <div class="card">
-          <span class="tag">For AI agents</span>
-          <h3>Scout Packs</h3>
-          <p>Paid per-call data APIs for AI agents. Lead enrichment and verification endpoints — email verification, domain intelligence, tech-stack and contact discovery — priced in cents per call and settled over the x402 protocol. No subscriptions, no minimums: an agent pays for a lookup only when it needs one.</p>
-        </div>
-        <div class="card">
-          <span class="tag">For NetSuite firms</span>
-          <h3>Tiger Import Desk</h3>
-          <p>File-only CSV preflight and repair for NetSuite inventory item updates. Send us the file you are about to import; we validate it against the target mapping, fix what is safely fixable, and return import-ready files with a change report covering every correction. No system access, no credentials — files in, files out.</p>
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="#">
+      <span class="claw"><i></i><i></i><i></i></span>
+      <span class="brand-name">TIGER&nbsp;OPERATIONS</span>
+    </a>
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#principles">How we work</a>
+      <a class="nav-cta" href="mailto:tiger@tigeroperations.com">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-stripes"></div>
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <p class="eyebrow reveal">Tiger Operations</p>
+    <h1 class="reveal">Data supply for the <span class="accent">agent economy</span><span class="slash">.</span></h1>
+    <p class="hero-sub reveal">AI agents are becoming buyers — of data, of verification, of work product. Tiger Operations builds the supply layer they buy from: <strong>production data services, priced per call, built for machines first</strong> — and precise tooling for the firms building alongside them.</p>
+    <div class="hero-actions reveal">
+      <a class="btn btn-primary" href="#products">See the products</a>
+      <a class="btn btn-ghost" href="mailto:tiger@tigeroperations.com">tiger@tigeroperations.com</a>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span>Email verification <b>/</b></span><span>Domain intelligence <b>/</b></span><span>Tech-stack detection <b>/</b></span><span>Contact discovery <b>/</b></span><span>Pay per call <b>/</b></span><span>x402 settlement <b>/</b></span><span>CSV preflight <b>/</b></span><span>Import repair <b>/</b></span><span>Change reports <b>/</b></span>
+  </div>
+</div>
+
+<main>
+  <section id="products">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">01</span>
+        <div>
+          <h2>Live products</h2>
+          <p class="section-lede">Two products, both in production. No vaporware, no waitlist — each one sells a concrete output for a stated price.</p>
         </div>
       </div>
-    </main>
+      <div class="products">
+        <article class="card reveal">
+          <div class="card-top">
+            <span class="card-idx">/ 01</span>
+            <span class="status">Live</span>
+          </div>
+          <h3>Scout Packs</h3>
+          <p class="for">Per-call data APIs — for AI agents</p>
+          <p>Lead enrichment and verification endpoints that an agent calls mid-task and pays for on the spot. Priced in cents per call and settled over the x402 protocol — no accounts, no subscriptions, no minimums. If the data isn't worth the call, the agent doesn't make it.</p>
+          <ul>
+            <li><b>Email verification</b> and pattern discovery</li>
+            <li><b>Domain intelligence</b> — registration, infrastructure, mail setup</li>
+            <li><b>Tech-stack &amp; contact discovery</b> for lead enrichment</li>
+            <li><b>Machine-native billing</b> — pay per call over x402</li>
+          </ul>
+        </article>
+        <article class="card reveal">
+          <div class="card-top">
+            <span class="card-idx">/ 02</span>
+            <span class="status">Live</span>
+          </div>
+          <h3>Tiger Import Desk</h3>
+          <p class="for">NetSuite CSV preflight &amp; repair — for firms</p>
+          <p>File-only preflight and repair for NetSuite inventory item update files. Send the CSV you're about to import; it comes back import-ready, with a change report covering every correction. Your import either works the first time or you know exactly why it wouldn't have.</p>
+          <ul>
+            <li><b>Validation</b> against your target field mapping</li>
+            <li><b>Repair</b> of what's safely fixable, flagged where it isn't</li>
+            <li><b>Change report</b> documenting every modification</li>
+            <li><b>Files in, files out</b> — no system access, no credentials</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
 
-    <section class="contact">
-      <h2>Contact</h2>
-      <p>Reach us at <a href="mailto:tiger@tigeroperations.com">tiger@tigeroperations.com</a>.</p>
-    </section>
+  <section id="principles" class="principles">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">02</span>
+        <div>
+          <h2>How we work</h2>
+        </div>
+      </div>
+      <div class="prin-grid reveal">
+        <div class="prin">
+          <div class="glyph">///</div>
+          <h4>Machines are customers</h4>
+          <p>Agents don't fill out contact forms. They read documentation, check a price, and pay — in one motion. Everything we ship is built to be bought that way: documented, priced, and callable without a human in the loop.</p>
+        </div>
+        <div class="prin">
+          <div class="glyph">///</div>
+          <h4>Pay for output, not access</h4>
+          <p>No seats, no tiers, no monthly minimums. A lookup costs cents when it's made and nothing when it isn't. Pricing follows the unit of value, so our revenue only exists when a customer got something worth paying for.</p>
+        </div>
+        <div class="prin">
+          <div class="glyph">///</div>
+          <h4>Precision over scale</h4>
+          <p>Small tools that do one job exactly right. Every endpoint and every repaired file is checked against a stated standard before it ships — the business is built on being correct, not on being loud.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>© 2026 Tiger Operations.</footer>
+  <section class="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">03</span>
+        <div><h2>Talk to us</h2></div>
+      </div>
+      <p class="reveal">Building an agent that needs data it can buy? Running NetSuite imports that keep failing at the worst moment? One inbox reaches everything we operate.</p>
+      <a class="mail reveal" href="mailto:tiger@tigeroperations.com">tiger@tigeroperations.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span class="foot-brand"><span class="claw"><i></i><i></i><i></i></span> TIGER OPERATIONS</span>
+    <p>© 2026 Tiger Operations.</p>
   </div>
+</footer>
+
+<script>
+  // Duplicate marquee content for a seamless loop
+  var track = document.getElementById('marqueeTrack');
+  track.innerHTML += track.innerHTML;
+
+  // Reveal elements as they enter the viewport
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+</script>
 </body>
 </html>
