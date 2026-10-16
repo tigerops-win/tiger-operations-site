@@ -296,6 +296,9 @@
 
   /* ---------- tiger builds ---------- */
   .mod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .proof-link { color: var(--blue-bright); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--blue); padding-bottom: 1px; }
+  .proof-grid + .section-lede { margin-top: 30px; }
   .mod {
     background: linear-gradient(165deg, #0e2247 0%, #081831 75%);
     border: 1px solid var(--line); padding: 28px 26px; position: relative; overflow: hidden;
@@ -329,7 +332,7 @@
   .foot-link { color: var(--muted); text-decoration: none; }
   .foot-link:hover { color: var(--blue-bright); }
   @media (max-width: 860px) {
-    .mod-grid, .intake-form { grid-template-columns: 1fr; }
+    .mod-grid, .intake-form, .proof-grid { grid-template-columns: 1fr; }
   }
 
 </style>
@@ -432,10 +435,29 @@
     </div>
   </section>
 
-  <section id="founding">
+  <section id="proof">
     <div class="wrap">
       <div class="section-head reveal">
         <span class="section-num">03</span>
+        <div>
+          <h2>Built, not promised</h2>
+          <p class="section-lede">No testimonials yet — the founding cohort is what creates them. What exists today is work you can look at.</p>
+        </div>
+      </div>
+      <div class="proof-grid reveal">
+        <div class="mod"><span class="card-idx">/ LIVE DEMO</span><h4>49-second demo</h4><p>Watch a founding-cohort build — intake, quote follow-up, and review requests. The intake in the video is the real form on this site. <a class="proof-link" href="demo.html">Watch the demo</a></p></div>
+        <div class="mod"><span class="card-idx">/ DEMO CONCEPT</span><h4>Chesapeake laundromat</h4><p>Demo concept built from a for-sale listing — a pickup-and-delivery storefront for an established Chesapeake laundromat. Not the business's live website, and not a paying client.</p></div>
+        <div class="mod"><span class="card-idx">/ DEMO CONCEPT</span><h4>Virginia Beach ice cream</h4><p>Demo concept built from a for-sale listing — a one-page site for a homemade ice cream shop in Virginia Beach. Not the business's live website, and not a paying client.</p></div>
+        <div class="mod"><span class="card-idx">/ DEMO CONCEPT</span><h4>Richmond gutter company</h4><p>Demo concept built from a for-sale listing — a services page for a gutter installation and cleaning company in the Richmond metro. Not the business's live website, and not a paying client.</p></div>
+      </div>
+      <p class="section-lede">Published prices, exactly as stated on this page: <strong>founding build free + 3 months free, then $49/mo locked</strong> — regular price $99/mo.</p>
+    </div>
+  </section>
+
+  <section id="founding">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">04</span>
         <div>
           <h2>Founding cohort — 10 spots</h2>
           <p class="section-lede">We're opening Tiger Builds with ten founding businesses.</p>
@@ -453,6 +475,7 @@
           <li><b>One workflow</b> per app</li>
           <li><b>Two revision rounds</b> to get it right</li>
           <li><b>Live on our stack</b> — hosting, fixes, and updates included</li>
+          <li><b>Domain name, about $15</b> — your only out-of-pocket cost to start; the build and the first three months are free</li>
           <li><b>$49/mo locked</b> for founding members after the free period (regular $99/mo)</li>
         </ul>
       </article>
@@ -462,7 +485,7 @@
   <section id="intake" class="principles">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="section-num">04</span>
+        <span class="section-num">05</span>
         <div>
           <h2>Describe your problem</h2>
           <p class="section-lede">About two minutes. A person reads every request.</p>

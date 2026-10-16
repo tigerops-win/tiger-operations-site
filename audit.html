@@ -183,6 +183,12 @@
   .findings-line { color: var(--muted); font-size: 17px; max-width: 720px; margin-top: 30px; line-height: 1.7; }
   .findings-line strong { color: var(--text); font-weight: 600; }
 
+  /* ---------- sample report ---------- */
+  .findings-line a { color: var(--blue-bright); font-weight: 600; }
+  .sample-section { border-top: 1px solid var(--line); }
+  .sample-grid { margin-top: 30px; }
+  .sample-actions { margin-top: 30px; display: flex; gap: 16px; flex-wrap: wrap; }
+
   /* ---------- spec panel (demo-box pattern) ---------- */
   .spec-box {
     background: linear-gradient(165deg, #0e2247 0%, #081831 75%);
@@ -356,14 +362,77 @@
           <p>Subagent and search-model usage that never appears in your main transcripts, found in the logs and priced separately, line by line.</p>
         </div>
       </div>
-      <p class="findings-line reveal">Every finding in the report is <strong>ranked by $/month</strong>, with evidence, a specific fix, and the arithmetic behind the saving — and anything we could not measure from your exports is <strong>named explicitly</strong>, not guessed at. A sample report, run on our own fleet with its small savings stated plainly, is available before you pay — just ask.</p>
+      <p class="findings-line reveal">Every finding in the report is <strong>ranked by $/month</strong>, with evidence, a specific fix, and the arithmetic behind the saving — and anything we could not measure from your exports is <strong>named explicitly</strong>, not guessed at. A sample report, run on our own fleet with its small savings stated plainly, is reproduced in full <a href="#sample">in the next section</a> — read it before you pay.</p>
+    </div>
+  </section>
+
+  <section id="sample" class="sample-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="section-num">02</span>
+        <div>
+          <h2>Sample report — our own fleet</h2>
+          <p class="section-lede">A real audit of Tiger Operations' own agent fleet, run with the same analyzer and the same two-way reconciliation a paid audit gets. This is not a customer report: no customer data appears in it, nobody paid for it, and its savings are small — stated plainly below, because that is what the numbers say.</p>
+        </div>
+      </div>
+      <div class="spec-box reveal">
+        <dl>
+          <div class="spec-row">
+            <dt>Coverage</dt>
+            <dd><b>15 sessions, 15 log files.</b> The logs span 7–14 October 2026; the substantive billed use is 12–14 October — the 7 October sessions are zero-cost login probes, and this sample does not present them as billed days.</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Records checked</dt>
+            <dd><b>193 raw assistant records, deduplicated to 85 unique messages</b> by message ID. 5 synthetic / zero-usage records were excluded from every total.</dd>
+          </div>
+          <div class="spec-row">
+            <dt>The dedup trap</dt>
+            <dd>Summing the raw records gives <b>131,015 output tokens</b>. The deduplicated truth is <b>50,346</b> — a naive sum overstates output <b>2.6x</b>, and any savings estimate built on it is overstated by the same factor. This check runs before any finding is priced.</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Verified total</dt>
+            <dd><b>$2.7488</b>, verified by Method B (the sessions' own cost records). Method A (per-message records priced at published list prices) gives $2.7837; every cent of the difference is itemized in the reconciliation — a cost record captured before its session's final message, one session with no cost record at all, and the hidden spend in the next row's card. Including estimates for the two defective records, the true total is an estimated $3.04–$3.18, of which $2.7488 is verified.</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Cache</dt>
+            <dd><b>258,510 cache-creation tokens</b> against <b>2,526,182 cache-read tokens</b> — a 90.7% cache-read share inside sessions. Caching worked inside a session; the waste was between them: 10 of the 15 sessions lasted under 60 seconds or held two or fewer real messages, and each new session re-created its cache from scratch.</dd>
+          </div>
+          <div class="spec-row">
+            <dt>Model mix</dt>
+            <dd><b>83 of 85 messages (97.6%) ran on the top-tier model</b>; 2 ran on the mid tier. Two of the top-tier sessions were smoke tests that produced 13 and 11 output tokens for $0.0544 and $0.0551 — almost all of each bill was creating the prompt cache on the most expensive model.</dd>
+          </div>
+        </dl>
+        <p class="spec-note">Defects are named, not hidden: <strong>one session had no cost record at all, and one had its cost record captured before its final message landed.</strong> Both are estimated from like-for-like sessions in the full reconciliation and labelled as estimates. An audit that hides its blind spots is not an audit.</p>
+      </div>
+      <div class="prin-grid exam sample-grid reveal">
+        <div class="prin">
+          <div class="glyph">///</div>
+          <h4>Hidden spend</h4>
+          <p>The most expensive invisible line was a <b>Haiku web-search subagent</b> inside one session: <b>$0.2738</b> on 130,461 input tokens — <b>44% of that session's cost</b> — and absent from the main session transcript. It is priced separately, line by line, exactly as a paid report prices it.</p>
+        </div>
+        <div class="prin">
+          <div class="glyph">///</div>
+          <h4>Agent shape</h4>
+          <p>The same operation's larger fleet is subscription-billed, so the audit reports it as token volume, not cash: over 23 days, <b>3,720 of 3,882 agents (95.8%) produced exactly one message</b>, and those one-shot agents consumed <b>1,784,108,888 of 3,291,304,374 input tokens — 54.2% of all input</b>. Each one pays full context cost for a single message and discards it.</p>
+        </div>
+        <div class="prin">
+          <div class="glyph">///</div>
+          <h4>The honest verdict</h4>
+          <p>Total identifiable waste in this lane: <b>about $0.10 measured, about $0.30 at most</b>. No monthly savings figure is extrapolated from two short project bursts — that would fabricate a run-rate. <b>This team would not qualify for the 3x guarantee</b>: its API-billed spend is far below the $1,000/month gate. The gate working as intended is part of the sample.</p>
+        </div>
+      </div>
+      <p class="findings-line reveal">A paid report adds your own numbers in this same structure: findings <strong>ranked by $/month</strong>, each with its evidence, its fix, and its arithmetic — plus a "what we could not measure" section naming every blind spot in your exports, not just ours.</p>
+      <div class="sample-actions reveal">
+        <a class="btn btn-primary" href="mailto:tiger@tigeroperations.com">Start by email — billing type + monthly spend</a>
+        <a class="btn btn-ghost" href="#guarantee">The guarantee</a>
+      </div>
     </div>
   </section>
 
   <section id="intake" class="principles">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="section-num">02</span>
+        <span class="section-num">03</span>
         <div>
           <h2>What you send us</h2>
           <p class="section-lede">Two exports covering the same period. Each one misses things the other catches; an audit on only one is incomplete.</p>
@@ -392,7 +461,7 @@
   <section id="guarantee">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="section-num">03</span>
+        <span class="section-num">04</span>
         <div>
           <h2>The guarantee — and its gate</h2>
         </div>
@@ -410,7 +479,7 @@
   <section id="start" class="principles">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="section-num">04</span>
+        <span class="section-num">05</span>
         <div>
           <h2>How it starts</h2>
           <p class="section-lede">$49, flat — for the first 10 teams in this test. Everything runs over email; no call is required at any stage.</p>
@@ -427,7 +496,7 @@
   <section class="contact">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="section-num">05</span>
+        <span class="section-num">06</span>
         <div><h2>Start the audit</h2></div>
       </div>
       <p class="reveal">Questions before ordering, or ready to send your numbers? One inbox reaches everything we operate.</p>
