@@ -5,29 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tiger Builds — 49-second demo | Tiger Operations</title>
 <meta name="description" content="Watch what Tiger Builds makes for local service businesses: intake, quote follow-up, and reviews — built free for the founding cohort.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#08090c; --panel:#101318; --line:#2c323b; --amber:#f5ab3a; --text:#f4f2ed; --muted:#9ba3ad; }
+  :root { --bg:#050b18; --panel:#0b1d3a; --line:rgba(160,200,255,.22); --blue:#2f9dff; --blue-bright:#57c8ff; --red:#ff3b30; --text:#f2f6fc; --muted:#9db4d0; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font-family: Georgia, 'Times New Roman', serif; }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 20px 64px; }
-  .eyebrow { color: var(--amber); letter-spacing: .35em; font-size: 12px; text-transform: uppercase; font-family: Arial, sans-serif; }
-  h1 { font-size: 40px; line-height: 1.15; margin: 14px 0 10px; font-weight: 600; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .top-ridges { display:block; width:100%; height:110px; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 26px 20px 64px; }
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:12px; color: var(--blue-bright);
+    font-family:"Barlow Condensed", "Arial Narrow", sans-serif; letter-spacing:.3em; font-size:15px; font-weight:700; text-transform: uppercase;
+  }
+  .eyebrow::before { content:""; width:12px; height:18px; background:var(--red); transform:skewX(-18deg); }
+  h1 {
+    font-family:"Barlow Condensed", "Arial Narrow", sans-serif; font-weight:700; font-style:italic; text-transform:uppercase;
+    font-size: clamp(38px, 7vw, 56px); line-height: 1.0; margin: 16px 0 12px;
+  }
   p.lede { color: var(--muted); font-size: 19px; line-height: 1.55; margin: 0 0 28px; }
-  video { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; background: #000; display: block; }
-  .cta { margin-top: 30px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
-  .cta h2 { margin: 0 0 8px; font-size: 24px; }
-  .cta p { color: var(--muted); margin: 0 0 16px; line-height: 1.55; font-size: 17px; }
-  a.btn { display: inline-block; background: var(--amber); color: #100e08; font-family: Arial, sans-serif; font-weight: 700; text-decoration: none; padding: 13px 22px; border-radius: 9px; }
-  .fine { color: var(--muted); font-size: 14px; margin-top: 22px; font-family: Arial, sans-serif; }
-  .fine a { color: var(--amber); }
+  video {
+    width: 100%; height: auto; display: block; background: #000;
+    border: 1px solid var(--line);
+    box-shadow: 0 30px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(87,200,255,.08);
+  }
+  .lower-third {
+    display:flex; align-items:stretch; margin-top: 14px;
+    background: linear-gradient(180deg, #10264a, #0a1a33); border: 1px solid var(--line);
+    font-family:"Barlow Condensed", "Arial Narrow", sans-serif;
+  }
+  .lt-tab {
+    background: var(--red); color:#fff; font-weight:700; font-style:italic; letter-spacing:.22em; text-transform:uppercase; font-size:15px;
+    display:inline-flex; align-items:center; padding: 9px 16px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+  .lt-text { display:inline-flex; align-items:center; padding: 9px 18px; font-size:17px; font-weight:600; font-style:italic; letter-spacing:.08em; text-transform:uppercase; }
+  .lt-text b { color: var(--blue-bright); font-weight:600; font-style:normal; font-size:14px; letter-spacing:.14em; margin-left:10px; }
+  .cta { margin-top: 30px; background: linear-gradient(165deg, #0e2247, #081831); border: 1px solid var(--line); padding: 26px; position: relative; }
+  .cta::before { content:""; position:absolute; top:0; left:0; right:0; height:3px; background: linear-gradient(90deg, var(--red) 0 90px, var(--blue) 90px, transparent 75%); }
+  .cta h2 { margin: 0 0 8px; font-family:"Barlow Condensed", "Arial Narrow", sans-serif; font-size: 30px; font-weight:700; font-style:italic; text-transform:uppercase; }
+  .cta p { color: var(--muted); margin: 0 0 18px; line-height: 1.55; font-size: 17px; }
+  a.btn {
+    display: inline-block; background: linear-gradient(180deg, #4db2ff, #1f7fe0); color: #fff;
+    font-family:"Barlow Condensed", "Arial Narrow", sans-serif; font-size:19px; font-weight: 700; letter-spacing:.05em; text-transform:uppercase;
+    text-decoration: none; padding: 13px 30px;
+    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  }
+  a.btn:hover { background: linear-gradient(180deg, #63bcff, #2f8fe8); }
+  .fine { color: var(--muted); font-size: 14px; margin-top: 22px; }
+  .fine a { color: var(--blue-bright); }
+  .foot-ridges { display:block; width:100%; height:70px; margin-top: 10px; }
+
 </style>
 </head>
 <body>
+  <svg class="top-ridges" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="#5b84b8" opacity="0.35" d="M0,96 L110,66 L240,92 L380,52 L520,86 L660,44 L800,80 L950,50 L1090,84 L1230,58 L1360,88 L1440,72 L1440,220 L0,220 Z"/><path fill="#3d6395" opacity="0.5" d="M0,124 L140,88 L300,118 L450,74 L610,112 L760,70 L920,110 L1075,78 L1220,116 L1345,90 L1440,108 L1440,220 L0,220 Z"/><path fill="#22406b" opacity="0.75" d="M0,152 L160,116 L330,146 L500,104 L680,142 L840,102 L1010,140 L1170,108 L1310,144 L1440,124 L1440,220 L0,220 Z"/><path fill="#081831" d="M0,182 L180,148 L360,176 L560,138 L740,172 L930,140 L1120,174 L1280,146 L1440,168 L1440,220 L0,220 Z"/></svg>
   <div class="wrap">
     <div class="eyebrow">Tiger Operations</div>
     <h1>Tiger Builds, in 49 seconds.</h1>
     <p class="lede">Tell us the problem. We build the app. This short demo shows what a founding-cohort build looks like: an intake that texts you the moment a job lands, follow-up that chases every quote, and reviews asked for at the right moment.</p>
     <video controls preload="metadata" playsinline src="demo.mp4"></video>
+    <div class="lower-third" aria-hidden="true"><span class="lt-tab">Demo</span><span class="lt-text">Tiger Builds <b>Intake &middot; Quote follow-up &middot; Reviews</b></span></div>
     <div class="cta">
       <h2>The intake in the video is live.</h2>
       <p>It is the real form, on the real page. Founding cohort: we build free, you run it free for three months, then $49 a month locked if you keep it — in exchange for your logo and a short testimonial if it works.</p>
@@ -35,5 +73,6 @@
     </div>
     <p class="fine">Tiger Operations · <a href="index.html">tigeroperations.com</a> · tiger@tigeroperations.com</p>
   </div>
+  <svg class="foot-ridges" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="#5b84b8" opacity="0.35" d="M0,96 L110,66 L240,92 L380,52 L520,86 L660,44 L800,80 L950,50 L1090,84 L1230,58 L1360,88 L1440,72 L1440,220 L0,220 Z"/><path fill="#3d6395" opacity="0.5" d="M0,124 L140,88 L300,118 L450,74 L610,112 L760,70 L920,110 L1075,78 L1220,116 L1345,90 L1440,108 L1440,220 L0,220 Z"/><path fill="#22406b" opacity="0.75" d="M0,152 L160,116 L330,146 L500,104 L680,142 L840,102 L1010,140 L1170,108 L1310,144 L1440,124 L1440,220 L0,220 Z"/><path fill="#050b18" d="M0,182 L180,148 L360,176 L560,138 L740,172 L930,140 L1120,174 L1280,146 L1440,168 L1440,220 L0,220 Z"/></svg>
 </body>
 </html>

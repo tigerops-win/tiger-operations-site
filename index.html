@@ -4,37 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#08090c">
+<meta name="theme-color" content="#050b18">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Tiger Operations — Data Supply for the Agent Economy</title>
 <meta name="description" content="Tiger Operations builds the supply layer for the AI-agent economy: per-call data APIs for AI agents and file-only NetSuite CSV preflight and repair.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #08090c;
-    --bg-2: #0d0f13;
-    --surface: #101318;
-    --line: rgba(244, 242, 237, 0.09);
-    --line-strong: rgba(244, 242, 237, 0.16);
-    --text: #f4f2ed;
-    --muted: #9ba3ad;
-    --faint: #626a74;
-    --accent: #f0a02c;
-    --accent-dim: rgba(240, 160, 44, 0.12);
+    --bg: #050b18;
+    --bg-2: #081831;
+    --surface: #0b1d3a;
+    --line: rgba(160, 200, 255, 0.13);
+    --line-strong: rgba(160, 200, 255, 0.26);
+    --text: #f2f6fc;
+    --muted: #9db4d0;
+    --faint: #5f7799;
+    --blue: #2f9dff;
+    --blue-bright: #57c8ff;
+    --blue-dim: rgba(47, 157, 255, 0.13);
+    --red: #ff3b30;
+    --chrome: linear-gradient(180deg, #fdfdff 0%, #cfe2f7 34%, #6f93bd 49%, #e8f3ff 54%, #8fb2d9 78%, #d7e8fa 100%);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Barlow", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-  ::selection { background: var(--accent); color: #0a0a0a; }
+  ::selection { background: var(--blue); color: #fff; }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
 
   /* ---------- reveal on scroll ---------- */
@@ -49,28 +52,38 @@
   /* ---------- nav ---------- */
   nav {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(8, 9, 12, 0.82);
-    backdrop-filter: blur(12px);
+    background: rgba(5, 11, 24, 0.86);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--line);
+  }
+  nav::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+    background: linear-gradient(90deg, var(--red) 0 120px, var(--blue) 120px, #8fb2d9 55%, transparent 92%);
   }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
   .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: var(--text); }
   .claw { display: inline-flex; gap: 3.5px; transform: skewX(-18deg); }
-  .claw i { display: block; width: 4px; height: 20px; background: var(--accent); border-radius: 2px; }
+  .claw i { display: block; width: 4px; height: 20px; background: linear-gradient(180deg, var(--blue-bright), var(--blue)); border-radius: 2px; }
   .claw i:nth-child(2) { height: 15px; opacity: 0.75; }
   .claw i:nth-child(3) { height: 10px; opacity: 0.5; }
-  .brand-name { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 16px; letter-spacing: 0.14em; }
+  .brand-name { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-style: italic; font-size: 20px; letter-spacing: 0.16em; }
   .nav-links { display: flex; gap: 34px; align-items: center; }
-  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14.5px; font-weight: 600; letter-spacing: 0.04em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
-  .nav-links a.nav-cta { color: var(--accent); border: 1px solid rgba(240, 160, 44, 0.4); padding: 8px 16px; border-radius: 6px; }
-  .nav-links a.nav-cta:hover { background: var(--accent-dim); color: var(--accent); }
+  .nav-links a.nav-cta {
+    color: var(--text); padding: 8px 16px 8px 18px;
+    background: linear-gradient(90deg, var(--red) 0 5px, var(--blue-dim) 5px);
+    border: 1px solid var(--line-strong);
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+  .nav-links a.nav-cta:hover { background: linear-gradient(90deg, var(--red) 0 5px, rgba(47, 157, 255, 0.25) 5px); color: #fff; }
 
   /* ---------- hero ---------- */
-  .hero { position: relative; padding: 120px 0 96px; overflow: hidden; }
+  .hero { position: relative; padding: 118px 0 210px; overflow: hidden; background: linear-gradient(180deg, #071228 0%, #050b18 78%); }
+  .hero .wrap { position: relative; z-index: 2; }
   .hero-stripes {
     position: absolute; inset: -40% -10% auto auto; width: 720px; height: 720px;
-    background: repeating-linear-gradient(-45deg, rgba(240, 160, 44, 0.05) 0 2px, transparent 2px 26px);
+    background: repeating-linear-gradient(-45deg, rgba(87, 200, 255, 0.05) 0 2px, transparent 2px 26px);
     -webkit-mask-image: radial-gradient(circle at 70% 30%, black 0%, transparent 65%);
             mask-image: radial-gradient(circle at 70% 30%, black 0%, transparent 65%);
     animation: drift 26s linear infinite alternate;
@@ -79,103 +92,164 @@
   @keyframes drift { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-30px, 22px, 0); } }
   .hero-glow {
     position: absolute; top: -260px; right: -120px; width: 640px; height: 640px;
-    background: radial-gradient(circle, rgba(240, 160, 44, 0.07) 0%, transparent 62%);
+    background: radial-gradient(circle, rgba(47, 157, 255, 0.13) 0%, transparent 62%);
     pointer-events: none;
   }
+  .ridges { position: absolute; left: 0; bottom: -1px; width: 100%; height: 190px; pointer-events: none; }
+  .foot-ridges { position: relative; display: block; width: 100%; height: 84px; margin-bottom: 6px; }
   .eyebrow {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 12.5px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-size: 15px; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blue-bright);
     margin-bottom: 30px;
   }
-  .eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--accent); }
+  .eyebrow::before { content: ""; width: 12px; height: 18px; background: var(--red); transform: skewX(-18deg); }
   h1 {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: clamp(46px, 8.4vw, 92px);
-    font-weight: 700; line-height: 0.98; letter-spacing: -0.022em;
-    max-width: 900px;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-size: clamp(54px, 9vw, 104px);
+    font-weight: 700; font-style: italic; text-transform: uppercase;
+    line-height: 0.95; letter-spacing: 0.005em;
+    max-width: 940px;
   }
-  h1 .accent { color: var(--accent); }
-  h1 .slash { color: var(--accent); font-weight: 500; }
+  h1 .accent {
+    background: var(--chrome);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+  h1 .slash { color: var(--red); font-weight: 700; }
   .hero-sub { margin-top: 30px; font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 640px; line-height: 1.65; }
   .hero-sub strong { color: var(--text); font-weight: 600; }
   .hero-actions { margin-top: 42px; display: flex; gap: 16px; flex-wrap: wrap; }
   .btn {
-    display: inline-block; text-decoration: none; font-weight: 600; font-size: 15px;
-    padding: 14px 26px; border-radius: 7px; transition: transform 0.2s, background 0.2s, border-color 0.2s;
+    display: inline-block; text-decoration: none; font-weight: 700; font-size: 15.5px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 19px;
+    padding: 13px 30px;
+    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    transition: transform 0.2s, background 0.2s, color 0.2s;
   }
-  .btn-primary { background: var(--accent); color: #0b0a08; }
-  .btn-primary:hover { transform: translateY(-2px); background: #f5ab3a; }
-  .btn-ghost { color: var(--text); border: 1px solid var(--line-strong); }
-  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
+  .btn-primary { background: linear-gradient(180deg, #4db2ff, #1f7fe0); color: #fff; }
+  .btn-primary:hover { transform: translateY(-2px); background: linear-gradient(180deg, #63bcff, #2f8fe8); }
+  .btn-ghost { color: var(--text); background: rgba(160, 200, 255, 0.07); box-shadow: inset 0 0 0 1px var(--line-strong); }
+  .btn-ghost:hover { transform: translateY(-2px); color: var(--blue-bright); box-shadow: inset 0 0 0 1px var(--blue); }
+
+  /* ---------- scorebug ---------- */
+  .scorebug {
+    margin-top: 52px; display: inline-flex; align-items: stretch; flex-wrap: wrap;
+    background: linear-gradient(180deg, #10264a, #0a1a33);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    max-width: 100%;
+  }
+  .bug-live {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red); color: #fff;
+    font-weight: 700; font-style: italic; letter-spacing: 0.22em; text-transform: uppercase; font-size: 16px;
+    padding: 10px 18px 10px 16px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+  }
+  .bug-live i { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pulse-w 2.4s infinite; }
+  @keyframes pulse-w { 0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.55); } 70% { box-shadow: 0 0 0 7px rgba(255, 255, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
+  .bug-item {
+    display: inline-flex; align-items: baseline; gap: 10px;
+    padding: 10px 20px; font-size: 18px; font-weight: 600; font-style: italic;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); white-space: nowrap;
+  }
+  .bug-item b { color: var(--blue-bright); font-weight: 600; font-style: normal; font-size: 14.5px; letter-spacing: 0.14em; }
+  .bug-sep { width: 1px; background: var(--line-strong); transform: skewX(-18deg); margin: 6px 2px; }
 
   /* ---------- marquee ---------- */
-  .marquee { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 18px 0; overflow: hidden; background: var(--bg-2); }
+  .marquee {
+    border-bottom: 1px solid var(--line); padding: 18px 0; overflow: hidden; background: var(--bg-2);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 10px));
+  }
   .marquee-track { display: flex; gap: 0; width: max-content; animation: scroll 38s linear infinite; }
   .marquee-track span {
-    font-family: "Space Grotesk", sans-serif; font-size: 13px; font-weight: 600;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 15px; font-weight: 600; font-style: italic;
     letter-spacing: 0.26em; text-transform: uppercase; color: var(--faint);
     padding: 0 28px; white-space: nowrap;
   }
-  .marquee-track span b { color: var(--accent); font-weight: 600; }
+  .marquee-track span b { color: var(--red); font-weight: 700; }
   @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ---------- sections ---------- */
   section { padding: 104px 0; }
   .section-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 54px; }
-  .section-num { font-family: "Space Grotesk", sans-serif; color: var(--accent); font-size: 15px; font-weight: 700; letter-spacing: 0.1em; }
-  h2 { font-family: "Space Grotesk", sans-serif; font-size: clamp(30px, 4.4vw, 44px); font-weight: 700; letter-spacing: -0.015em; line-height: 1.08; }
+  .section-num { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; color: var(--blue); font-size: 19px; font-weight: 700; font-style: italic; letter-spacing: 0.1em; }
+  h2 {
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-size: clamp(36px, 5vw, 52px); font-weight: 700; font-style: italic; text-transform: uppercase;
+    letter-spacing: 0.01em; line-height: 1.02;
+  }
   .section-lede { color: var(--muted); font-size: 17px; max-width: 600px; margin-top: 14px; }
 
   /* ---------- products ---------- */
   .products { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
   .card {
-    position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    position: relative;
+    background: linear-gradient(165deg, #0e2247 0%, #081831 70%);
+    border: 1px solid var(--line);
     padding: 40px 36px 36px; overflow: hidden;
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s;
   }
   .card::before {
     content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--accent), transparent 65%);
-    opacity: 0; transition: opacity 0.35s;
+    background: linear-gradient(90deg, var(--blue-bright), #d7e8fa 45%, transparent 78%);
+    opacity: 0.55; transition: opacity 0.35s;
   }
-  .card:hover { transform: translateY(-5px); border-color: rgba(240, 160, 44, 0.45); }
+  .card::after {
+    content: ""; position: absolute; top: 0; right: 0; width: 44px; height: 44px;
+    background: linear-gradient(225deg, rgba(87, 200, 255, 0.16) 0 50%, transparent 50%);
+  }
+  .card:hover { transform: translateY(-5px); border-color: rgba(87, 200, 255, 0.5); }
   .card:hover::before { opacity: 1; }
   .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
-  .card-idx { font-family: "Space Grotesk", sans-serif; font-size: 14px; font-weight: 700; color: var(--faint); letter-spacing: 0.12em; }
-  .status { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
-  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(240, 160, 44, 0.5); animation: pulse 2.4s infinite; }
-  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(240, 160, 44, 0.45); } 70% { box-shadow: 0 0 0 8px rgba(240, 160, 44, 0); } 100% { box-shadow: 0 0 0 0 rgba(240, 160, 44, 0); } }
-  .card h3 { font-family: "Space Grotesk", sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .card-idx { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 16px; font-weight: 700; font-style: italic; color: var(--faint); letter-spacing: 0.12em; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue-bright);
+    background: rgba(5, 11, 24, 0.55); border: 1px solid var(--line-strong); padding: 4px 12px 4px 10px;
+    clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+  }
+  .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.5); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.45); } 70% { box-shadow: 0 0 0 8px rgba(255, 59, 48, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); } }
+  .card h3 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 36px; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.01em; margin-bottom: 6px; }
   .card .for { font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); margin-bottom: 18px; }
   .card p { color: var(--muted); font-size: 16px; line-height: 1.7; }
   .card ul { list-style: none; margin-top: 22px; border-top: 1px solid var(--line); }
-  .card ul li { padding: 11px 0 11px 24px; position: relative; color: var(--muted); font-size: 14.5px; border-bottom: 1px solid var(--line); }
+  .card ul li { padding: 11px 0 11px 24px; position: relative; color: var(--muted); font-size: 15px; border-bottom: 1px solid var(--line); }
   .card ul li:last-child { border-bottom: none; }
-  .card ul li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 9px; height: 2px; background: var(--accent); transform: skewX(-24deg); }
+  .card ul li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 9px; height: 2px; background: var(--red); transform: skewX(-24deg); }
   .card ul li b { color: var(--text); font-weight: 600; }
 
   /* ---------- live demo ---------- */
-  .demo-box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 36px; }
+  .demo-box {
+    background: linear-gradient(165deg, #0e2247 0%, #081831 75%);
+    border: 1px solid var(--line); padding: 36px; position: relative;
+  }
+  .demo-box::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red) 0 90px, var(--blue) 90px, transparent 75%); }
   .demo-form { display: flex; gap: 12px; flex-wrap: wrap; }
   .demo-form input {
-    flex: 1 1 280px; background: var(--bg); color: var(--text); border: 1px solid var(--line-strong); border-radius: 7px;
-    padding: 14px 16px; font: 500 15px "Inter", sans-serif; outline: none; transition: border-color 0.2s;
+    flex: 1 1 280px; background: #060f20; color: var(--text); border: 1px solid var(--line-strong);
+    padding: 14px 16px; font: 500 15px "Barlow", sans-serif; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
   }
   .demo-form input::placeholder { color: var(--faint); }
-  .demo-form input:focus { border-color: var(--accent); }
-  .demo-form .btn { border: none; cursor: pointer; font-family: inherit; }
+  .demo-form input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(47, 157, 255, 0.18); }
+  .demo-form .btn { border: none; cursor: pointer; }
   .demo-form .btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
   .demo-note { margin-top: 14px; color: var(--faint); font-size: 14px; }
   .demo-out { margin-top: 26px; }
   .demo-out:empty { display: none; }
   .demo-msg { font-size: 15px; color: var(--muted); }
-  .demo-msg.err { color: #f07a5c; }
+  .demo-msg.err { color: #ff7a70; }
   .demo-msg.loading::after { content: ""; display: inline-block; width: 1.2em; text-align: left; animation: dots 1.2s steps(4) infinite; }
   @keyframes dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75% { content: "..."; } }
-  .demo-card { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
-  .demo-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; background: var(--bg-2); border-bottom: 1px solid var(--line); }
-  .demo-card-head h4 { font-family: "Space Grotesk", sans-serif; font-size: 19px; font-weight: 600; }
-  .demo-row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 11px 20px; border-bottom: 1px solid var(--line); font-size: 14.5px; }
+  .demo-card { border: 1px solid var(--line); overflow: hidden; background: rgba(5, 11, 24, 0.4); }
+  .demo-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 20px; background: linear-gradient(180deg, #10264a, #0a1a33); border-bottom: 1px solid var(--line); }
+  .demo-card-head h4 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 23px; font-weight: 700; font-style: italic; letter-spacing: 0.03em; }
+  .demo-row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 11px 20px; border-bottom: 1px solid var(--line); font-size: 15px; }
   .demo-row:last-child { border-bottom: none; }
   .demo-row dt { color: var(--faint); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; font-size: 12px; padding-top: 2px; }
   .demo-row dd { color: var(--text); word-break: break-word; }
@@ -183,26 +257,26 @@
 
   /* ---------- principles ---------- */
   .principles { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .prin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-  .prin { padding: 38px 32px; background: var(--surface); }
+  .prin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); overflow: hidden; }
+  .prin { padding: 38px 32px; background: linear-gradient(170deg, #0c2050 0%, #0a1a33 80%); }
   .prin + .prin { border-left: 1px solid var(--line); }
-  .prin .glyph { font-family: "Space Grotesk", sans-serif; font-size: 26px; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
-  .prin h4 { font-family: "Space Grotesk", sans-serif; font-size: 19px; font-weight: 600; margin-bottom: 10px; }
+  .prin .glyph { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 28px; color: var(--blue); font-weight: 700; font-style: italic; margin-bottom: 16px; }
+  .prin h4 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 23px; font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 10px; }
   .prin p { color: var(--muted); font-size: 15px; line-height: 1.65; }
 
   /* ---------- contact ---------- */
   .contact { text-align: left; }
-  .contact h2 { font-size: clamp(36px, 6vw, 62px); max-width: 720px; }
+  .contact h2 { font-size: clamp(42px, 6.6vw, 68px); max-width: 760px; }
   .contact p { color: var(--muted); font-size: 18px; margin-top: 20px; max-width: 560px; }
   .contact .mail {
     display: inline-block; margin-top: 36px;
-    font-family: "Space Grotesk", sans-serif; font-size: clamp(20px, 3.4vw, 30px); font-weight: 600;
-    color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 4px;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: clamp(24px, 3.8vw, 36px); font-weight: 700; font-style: italic;
+    color: var(--text); text-decoration: none; border-bottom: 3px solid var(--blue); padding-bottom: 4px;
     transition: color 0.2s;
   }
-  .contact .mail:hover { color: var(--accent); }
+  .contact .mail:hover { color: var(--blue-bright); }
 
-  footer { border-top: 1px solid var(--line); padding: 34px 0 44px; }
+  footer { border-top: 1px solid var(--line); padding: 10px 0 44px; overflow: hidden; }
   .foot-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
   .foot-inner p { color: var(--faint); font-size: 14px; }
   .foot-brand { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 13px; letter-spacing: 0.14em; font-weight: 600; }
@@ -213,9 +287,13 @@
     .demo-box { padding: 24px 20px; }
     .demo-row { grid-template-columns: 1fr; gap: 2px; }
     section { padding: 72px 0; }
-    .hero { padding: 84px 0 72px; }
+    .hero { padding: 84px 0 170px; }
+    .ridges { height: 130px; }
+    .scorebug { display: flex; }
+    .bug-item { white-space: normal; }
     .nav-links a:not(.nav-cta) { display: none; }
   }
+
 </style>
 </head>
 <body>
@@ -247,7 +325,16 @@
       <a class="btn btn-primary" href="#products">See the products</a>
       <a class="btn btn-ghost" href="mailto:tiger@tigeroperations.com">tiger@tigeroperations.com</a>
     </div>
+    <div class="scorebug reveal" aria-hidden="true">
+      <span class="bug-live"><i></i>Live</span>
+      <span class="bug-item">Scout Packs <b>Per-call data APIs</b></span>
+      <span class="bug-sep"></span>
+      <span class="bug-item">Tiger Import Desk <b>NetSuite CSV repair</b></span>
+      <span class="bug-sep"></span>
+      <span class="bug-item">Settlement <b>x402</b></span>
+    </div>
   </div>
+  <svg class="ridges" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="#5b84b8" opacity="0.35" d="M0,96 L110,66 L240,92 L380,52 L520,86 L660,44 L800,80 L950,50 L1090,84 L1230,58 L1360,88 L1440,72 L1440,220 L0,220 Z"/><path fill="#3d6395" opacity="0.5" d="M0,124 L140,88 L300,118 L450,74 L610,112 L760,70 L920,110 L1075,78 L1220,116 L1345,90 L1440,108 L1440,220 L0,220 Z"/><path fill="#22406b" opacity="0.75" d="M0,152 L160,116 L330,146 L500,104 L680,142 L840,102 L1010,140 L1170,108 L1310,144 L1440,124 L1440,220 L0,220 Z"/><path fill="#081831" d="M0,182 L180,148 L360,176 L560,138 L740,172 L930,140 L1120,174 L1280,146 L1440,168 L1440,220 L0,220 Z"/></svg>
 </header>
 
 <div class="marquee" aria-hidden="true">
@@ -362,6 +449,7 @@
 </main>
 
 <footer>
+  <svg class="foot-ridges" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="#5b84b8" opacity="0.35" d="M0,96 L110,66 L240,92 L380,52 L520,86 L660,44 L800,80 L950,50 L1090,84 L1230,58 L1360,88 L1440,72 L1440,220 L0,220 Z"/><path fill="#3d6395" opacity="0.5" d="M0,124 L140,88 L300,118 L450,74 L610,112 L760,70 L920,110 L1075,78 L1220,116 L1345,90 L1440,108 L1440,220 L0,220 Z"/><path fill="#22406b" opacity="0.75" d="M0,152 L160,116 L330,146 L500,104 L680,142 L840,102 L1010,140 L1170,108 L1310,144 L1440,124 L1440,220 L0,220 Z"/><path fill="#050b18" d="M0,182 L180,148 L360,176 L560,138 L740,172 L930,140 L1120,174 L1280,146 L1440,168 L1440,220 L0,220 Z"/></svg>
   <div class="wrap foot-inner">
     <span class="foot-brand"><span class="claw"><i></i><i></i><i></i></span> TIGER OPERATIONS</span>
     <p><a href="builds.html" style="color: var(--muted); text-decoration: none;">Tiger Builds</a> &nbsp;·&nbsp; © 2026 Tiger Operations.</p>
