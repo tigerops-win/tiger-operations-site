@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#050b18">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <title>Tiger Operations — Data Supply for the Agent Economy</title>
-<meta name="description" content="Tiger Operations builds the supply layer for the AI-agent economy: per-call data APIs for AI agents and file-only NetSuite CSV preflight and repair.">
+<meta name="description" content="Tiger Operations builds the supply layer for the AI-agent economy: per-call data APIs for AI agents, file-only NetSuite CSV preflight and repair, and a $49 agent-fleet cost audit.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -223,6 +223,17 @@
   .card ul li:last-child { border-bottom: none; }
   .card ul li::before { content: ""; position: absolute; left: 2px; top: 19px; width: 9px; height: 2px; background: var(--red); transform: skewX(-24deg); }
   .card ul li b { color: var(--text); font-weight: 600; }
+  .card-wide { grid-column: 1 / -1; }
+  .card-wide ul { columns: 2; column-gap: 44px; }
+  .card-wide ul li { break-inside: avoid; }
+  .card-link {
+    display: inline-block; margin-top: 24px;
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-size: 18px; font-weight: 700; font-style: italic;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-bright);
+    text-decoration: none; border-bottom: 2px solid var(--blue); padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .card-link:hover { color: var(--text); }
 
   /* ---------- live demo ---------- */
   .demo-box {
@@ -283,6 +294,7 @@
 
   @media (max-width: 860px) {
     .products, .prin-grid { grid-template-columns: 1fr; }
+    .card-wide ul { columns: 1; }
     .prin + .prin { border-left: none; border-top: 1px solid var(--line); }
     .demo-box { padding: 24px 20px; }
     .demo-row { grid-template-columns: 1fr; gap: 2px; }
@@ -309,6 +321,7 @@
       <a href="#demo">Live demo</a>
       <a href="#principles">How we work</a>
       <a href="builds.html">Tiger Builds</a>
+      <a href="audit.html">Cost Audit</a>
       <a class="nav-cta" href="mailto:tiger@tigeroperations.com">Contact</a>
     </div>
   </div>
@@ -331,6 +344,8 @@
       <span class="bug-sep"></span>
       <span class="bug-item">Tiger Import Desk <b>NetSuite CSV repair</b></span>
       <span class="bug-sep"></span>
+      <span class="bug-item">Agent-Fleet Cost Audit <b>$49 flat</b></span>
+      <span class="bug-sep"></span>
       <span class="bug-item">Settlement <b>x402</b></span>
     </div>
   </div>
@@ -339,7 +354,7 @@
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track" id="marqueeTrack">
-    <span>Email verification <b>/</b></span><span>Domain intelligence <b>/</b></span><span>Tech-stack detection <b>/</b></span><span>Contact discovery <b>/</b></span><span>Pay per call <b>/</b></span><span>x402 settlement <b>/</b></span><span>CSV preflight <b>/</b></span><span>Import repair <b>/</b></span><span>Change reports <b>/</b></span>
+    <span>Email verification <b>/</b></span><span>Domain intelligence <b>/</b></span><span>Tech-stack detection <b>/</b></span><span>Contact discovery <b>/</b></span><span>Pay per call <b>/</b></span><span>x402 settlement <b>/</b></span><span>CSV preflight <b>/</b></span><span>Import repair <b>/</b></span><span>Change reports <b>/</b></span><span>Agent cost audit <b>/</b></span>
   </div>
 </div>
 
@@ -350,7 +365,7 @@
         <span class="section-num">01</span>
         <div>
           <h2>Live products</h2>
-          <p class="section-lede">Two products, both in production. No vaporware, no waitlist — each one sells a concrete output for a stated price.</p>
+          <p class="section-lede">Three offers, all live. No vaporware, no waitlist — each one sells a concrete output for a stated price.</p>
         </div>
       </div>
       <div class="products">
@@ -383,6 +398,22 @@
             <li><b>Change report</b> documenting every modification</li>
             <li><b>Files in, files out</b> — no system access, no credentials</li>
           </ul>
+        </article>
+        <article class="card card-wide reveal">
+          <div class="card-top">
+            <span class="card-idx">/ 03</span>
+            <span class="status">Live</span>
+          </div>
+          <h3>Agent-Fleet Cost Audit</h3>
+          <p class="for">Claude Code spend audit — for teams</p>
+          <p>A written audit of what your team's Claude Code and agent usage actually costs, run entirely on exports you generate and send us — no code, no API key, no credentials. Totals are reconciled two independent ways and deduplicated by message ID before a single finding is priced.</p>
+          <ul>
+            <li><b>Findings ranked by $/month</b> — model mix, cache waste, one-shot agent churn, hidden subagent spend</li>
+            <li><b>The dedup check</b> — naive log sums overstate output ~2.6x; your numbers are the deduplicated ones</li>
+            <li><b>$49 flat</b> — written report within 48 hours of complete exports and confirmed payment</li>
+            <li><b>3x savings guarantee</b> — full refund if verified findable savings come in under $147/mo, for teams with $1,000+/mo API-billed spend, qualified before payment</li>
+          </ul>
+          <a class="card-link" href="audit.html">See the audit →</a>
         </article>
       </div>
     </div>
@@ -452,7 +483,7 @@
   <svg class="foot-ridges" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="#5b84b8" opacity="0.35" d="M0,96 L110,66 L240,92 L380,52 L520,86 L660,44 L800,80 L950,50 L1090,84 L1230,58 L1360,88 L1440,72 L1440,220 L0,220 Z"/><path fill="#3d6395" opacity="0.5" d="M0,124 L140,88 L300,118 L450,74 L610,112 L760,70 L920,110 L1075,78 L1220,116 L1345,90 L1440,108 L1440,220 L0,220 Z"/><path fill="#22406b" opacity="0.75" d="M0,152 L160,116 L330,146 L500,104 L680,142 L840,102 L1010,140 L1170,108 L1310,144 L1440,124 L1440,220 L0,220 Z"/><path fill="#050b18" d="M0,182 L180,148 L360,176 L560,138 L740,172 L930,140 L1120,174 L1280,146 L1440,168 L1440,220 L0,220 Z"/></svg>
   <div class="wrap foot-inner">
     <span class="foot-brand"><span class="claw"><i></i><i></i><i></i></span> TIGER OPERATIONS</span>
-    <p><a href="builds.html" style="color: var(--muted); text-decoration: none;">Tiger Builds</a> &nbsp;·&nbsp; © 2026 Tiger Operations.</p>
+    <p><a href="builds.html" style="color: var(--muted); text-decoration: none;">Tiger Builds</a> &nbsp;·&nbsp; <a href="audit.html" style="color: var(--muted); text-decoration: none;">Cost Audit</a> &nbsp;·&nbsp; © 2026 Tiger Operations.</p>
   </div>
 </footer>
 
